@@ -29,7 +29,7 @@ export default function Search({ id }) {
         <label
           htmlFor={id}
           className={value !== "" ? css.active : null}
-        >Country</label>
+        >City</label>
       </div>
     </div>
   )
