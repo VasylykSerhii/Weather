@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useMemo } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import css from './style.module.scss'
+import css from "./style.module.scss";
 
-function Default({title, children}) {
+function Default({ title, children }) {
   const router = useRouter();
-  const url = router && router.pathname;
+  const url = useMemo(() => router && router.pathname, [router]);
 
   return (
     <div className={css.defaultLayout}>
@@ -19,4 +19,4 @@ function Default({title, children}) {
   );
 }
 
-export default Default
+export default Default;

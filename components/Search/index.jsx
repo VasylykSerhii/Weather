@@ -1,19 +1,25 @@
-import React, { useState, useRef, useCallback } from 'react'
-import css from './style.module.scss'
-import { useDispatch } from 'react-redux';
-import getWeather from '../../redux/actions/weather.actions'
+import React, { useState, useRef, useCallback } from "react";
+import css from "./style.module.scss";
+import { useDispatch } from "react-redux";
+import getWeather from "../../redux/actions/weather.actions";
 import _ from "lodash";
 
 export default function Search({ id }) {
-  const [value, setValue] = useState("")
+  const [value, setValue] = useState("");
   const input = useRef();
-  const dispatch = useDispatch()
-  const delayedQuery = useCallback(_.debounce(e => dispatch(getWeather(e)), 500), []);
+  const dispatch = useDispatch();
+  const delayedQuery = useCallback(
+    _.debounce((e) => dispatch(getWeather(e)), 500),
+    [dispatch]
+  );
 
-  const changeValue = (e) => {
-    setValue(e.target.value)
-    delayedQuery(e.target.value)
-  }
+  const changeValue = useCallback(
+    (e) => {
+      setValue(e.target.value);
+      delayedQuery(e.target.value);
+    },
+    [delayedQuery]
+  );
 
   return (
     <div className={css.search}>
@@ -26,11 +32,10 @@ export default function Search({ id }) {
           onChange={changeValue}
           autoComplete="off"
         />
-        <label
-          htmlFor={id}
-          className={value !== "" ? css.active : null}
-        >City</label>
+        <label htmlFor={id} className={value !== "" ? css.active : null}>
+          City
+        </label>
       </div>
     </div>
-  )
+  );
 }
